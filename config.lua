@@ -68,7 +68,13 @@ lvim.plugins = {
   {
     "stevearc/oil.nvim",
     config = function()
-      require("oil").setup()
+      require("oil").setup {
+        float = {
+          max_width = 80,
+          max_height = 40,
+          border = "rounded",
+        },
+      }
     end,
   },
 
@@ -77,22 +83,22 @@ lvim.plugins = {
   -- { 'wfxr/minimap.vim' },
 
   -- magic folding using left/right arrow keys at beginning of line.
-  {
-    "chrisgrieser/nvim-origami",
-    event = "BufReadPost", -- later or on keypress would prevent saving folds
-    opts = {
-      setupFoldKeymaps = false,
-    },
-    config = function()
-      local ori = require "origami"
-      vim.keymap.set("n", "<Left>", function()
-        ori.h()
-      end)
-      vim.keymap.set("n", "<Right>", function()
-        ori.l()
-      end)
-    end,
-  },
+  -- {
+  --   "chrisgrieser/nvim-origami",
+  --   event = "BufReadPost", -- later or on keypress would prevent saving folds
+  --   opts = {
+  --     setupFoldKeymaps = false,
+  --   },
+  --   config = function()
+  --     local ori = require "origami"
+  --     vim.keymap.set("n", "<Left>", function()
+  --       ori.h()
+  --     end)
+  --     vim.keymap.set("n", "<Right>", function()
+  --       ori.l()
+  --     end)
+  --   end,
+  -- },
 
   -- nicer ui:
   {
@@ -153,6 +159,8 @@ lvim.plugins = {
   { "sindrets/diffview.nvim" },
 
   -- just some themes 💖
+  { "EdenEast/nightfox.nvim" },
+  { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
   { "jaredgorski/spacecamp" },
   { "romgrk/doom-one.vim" },
   { "miikanissi/modus-themes.nvim" },
@@ -160,7 +168,7 @@ lvim.plugins = {
     "maxmx03/fluoromachine.nvim",
     config = function()
       local fm = require "fluoromachine"
-      fm.setup { glow = false, brightness = 0.25, theme = "retrowave" }
+      fm.setup { glow = false, brightness = 0.25, theme = "delta" }
     end,
   },
   { "rebelot/kanagawa.nvim" },
@@ -192,16 +200,14 @@ lvim.plugins = {
 -- vim.g.minimap_width = 10
 -- vim.g.minimap_git_colors = 1
 
-lvim.colorscheme = "sweetie"
+lvim.colorscheme = "duskfox"
+-- lvim.colorscheme = "sweetie"
 -- lvim.colorscheme = "fluoromachine"
 
 vim.keymap.set("n", "<leader>]", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>[", "<cmd>bprev<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Left>", "<cmd>bprev<cr>", { desc = "Previous buffer" })
-
--- this is also available as `gl` in lunarvim, but i like <Leader>E better
-vim.keymap.set("n", "<leader>E", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Show Error Details" })
 
 -- vim.opt.foldmethod = "foldexpr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -280,6 +286,7 @@ lvim.builtin.which_key.mappings["["] = { "<cmd>bprev<cr>", "prev buf" }
 lvim.builtin.which_key.mappings["`"] = { "<cmd>Neotree float filesystem<cr>", "files" }
 lvim.builtin.which_key.mappings.f = { "<cmd>Telescope find_files<cr>", "find" }
 lvim.builtin.which_key.mappings.e = {}
+lvim.builtin.which_key.mappings.o = { "<cmd>Oil --float<cr>", "Oil filemonger" }
 
 lvim.keys.normal_mode["`"] = "<cmd>Neotree float filesystem<cr>"
 lvim.keys.normal_mode["<tab>"] = "<cmd>Telescope buffers<cr>"
@@ -319,7 +326,7 @@ code_actions.setup {
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   { name = "actionlint" },
-  { name = "alex" },
+  -- { name = "alex" },
   { name = "cfn_lint" },
   { name = "checkmake" },
   { name = "codespell" },
@@ -327,7 +334,7 @@ linters.setup {
   { name = "dotenv_linter" },
   { name = "shellcheck" },
   { name = "tsc" },
-  { name = "write_good" },
+  -- { name = "write_good" },
 }
 
 -- local completion = require "lvim.lsp.null-ls.completions"
